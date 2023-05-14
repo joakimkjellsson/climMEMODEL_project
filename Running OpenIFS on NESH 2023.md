@@ -13,11 +13,11 @@ You have two main directories: $HOME and $WORK.
 $HOME has very little capacity but is backed up daily. $WORK has large capacity but is not backed up. The strategy should be to keep code, e.g. model code and Jupyter notebooks, on $HOME, while model data goes on $WORK. 
 
 Key directories:
+| Directory                   | Description                                         |
 | --------------------------- | --------------------------------------------------- | 
 | `$HOME/esm/esm_tools`       | Home to ESM-Tools, where you keep runscripts        |
 | `$HOME/esm/models`          | Where all model code is                             |
 | `$HOME/esm/esm-experiments` | Link to $WORK/esm-experiments, where your data goes |
-| --------------------------- | --------------------------------------------------- |
 
 ## 2) Compile model code
 
