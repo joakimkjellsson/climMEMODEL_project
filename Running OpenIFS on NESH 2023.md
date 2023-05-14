@@ -86,6 +86,7 @@ Now it is up to you to formulate an idea for a project, make the necessary chang
  
 ### Handy UNIX commands
 
+| Command                      | Result                                                     |
 | ---------------------------- | ---------------------------------------------------------- |
 | ls                           | List contents of directory                                 |
 | vi <file>                    | Open and edit a text file                                  | 
@@ -97,7 +98,6 @@ Now it is up to you to formulate an idea for a project, make the necessary chang
 | sbatch <script.run>          | Submit a .run script to the queue                          |
 | scancel <job ID>             | Stop a running job (get Job ID from squeue)                |
 | ncview <file.nc>             | Open and plot contents of netCDF file                      |
-| ---------------------------- | ---------------------------------------------------------- |
 
  
 ### Default configurations
