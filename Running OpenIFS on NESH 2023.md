@@ -186,7 +186,6 @@ See "More information" below for some things that can be done and how to do it.
 | sbatch <script.run>          | Submit a .run script to the queue                          |
 | scancel <job ID>             | Stop a running job (get Job ID from squeue)                |
 | ncview <file.nc>             | Open and plot contents of netCDF file                      |
-
  
 ### Default configurations
 
@@ -244,4 +243,66 @@ Note that ENTRORG is defined in the NAMCUMF chapter. There are many other parame
 All model input can in principle be modified, e.g. orography, SST, land-sea mask, surface properties (vegetation, albedo, roughness etc). 
 You can change SSTs and sea-ice concentrations as well. 
 The data is contained in GRIB files, but can be converted to netCDF, modified, and converted back to GRIB. 
+
+### Directory structures
+
+Your experiments will be stored in `/gxfs_work1/geomar/$USER/esm-experiments/`. 
+If your experiment is `OIFS-KJK001`, then you should see something like
+
+```bash
+(base) [smomw352@nesh-fe1 esm-experiments]$ ls OIFS-KJK001
+analysis  bin  config  couple  forcing  input  log  mon  outdata  restart  run_19790101-19790131  run_19790201-19790228  scripts  src  unknown  viz
+```
+
+| Directory                    | Use                                                     |
+| ---------------------------- | ---------------------------------------------------------- |
+| analysis                     | Empty                                 |
+| bin                          | Executables, e.g. master.exe                               | 
+| config                       | Namelists etc.                                  |
+| couple                       | Only used for coupled climate models      |
+| forcing                      | Empty                          |
+| input                        | Input data, e.g. orography, grid files, gas concentrations |
+| log                          | Log files from models                       |
+| mon                          | Monitoring. Not used here.                           |
+| outdata                      | All model output                |
+| restart                      | Restart files for each run                     |
+| run_19790101-19790131        | All files needed to run 1979-01-01 to 1979-01-31 |
+| scripts                      | Copy of ESM Tools runscript, and script sent to queue |
+| src                          | Not used |
+| unknown                      | Things ESM-Tools does not know what to do with (nothing is ever deleted) |
+| viz                          | Visualization (not used) |
+
+The run directory, e.g. `run_19790101-19790131`, will have a similar structure 
+
+```bash
+(base) [smomw352@nesh-fe1 OIFS-KJK001]$ ls run_19790101-19790131/
+analysis  bin  config  couple  forcing  input  log  mon  outdata  restart  scripts  src  unknown  viz  work
+```
+
+This directory contains everything needed to run this particular time period. 
+Much of this are copies, and it will be deleted automatially after some time. 
+When the run is done, everything is put in the main experiment directory. 
+
+But we now have the `work` directory, which is where the model actually runs. 
+This contains e.g. 
+
+| File                | Description                                                     |
+| ------------------- | ---------------------------------------------------------- |
+| 95_4                | Input data for Tco95 grid                                 |
+| context_ifs.xml     | Settings to control OpenIFS output |
+| fort.4              | Namelist with model settings                                | 
+| hostfile_srun       | File describing how machine executes oifs              |
+| ICMGGECE3INIT       | Initial conditions (grid-point space, surface)      |
+| ICMGGECE3INIUA      | Initial conditions (grid-point space, 3D)               |
+| ICMSHECE3INIT       | Initial conditions (spherical harmonics)   |
+| ICMCLECE3INIT       | SST and sea-ice data for each day                      |
+| ifsdata             | Input data (greenhouse-gas conc, aerosols etc)          |
+| ifs.stat            | Time for running each time step |
+| ifs_xml             | XML files for controlling model output |
+| iodef.xml           | XIOS settings |
+| NODE.001_01         | Log file from OpenIFS (very big) |
+| oifs                | OpenIFS executable |
+| xios.x              | XIOS binary   |
+| xios_client/server* | Log files from XIOS (one for each core)  |   
+
 
