@@ -2,10 +2,97 @@
 
 ## Steps
 
-1) 
-1) Compile the model code
-2) Make a runscript
-3) Run the model
+0) Pre-requisites
+1) Set up environment
+2) Compile the model code
+3) Make a runscript
+4) Run the model
+
+## 0) Pre-requisites
+
+Before running the model or analysing the output, you should take the time to do the following: 
+
+1) Verify that you can log in to NESH
+2) Set up password-less log in
+3) Configure Jupyter notebooks 
+
+### 1) Log in to NESH
+
+In the terminal, type
+```bash
+ssh <username>@nesh-fe.rz.uni-kiel.de
+```
+
+This will ask you for your password and then (hopefully) log you in. 
+Note: Log in to NESH is ONLY possible from computers from GEOMAR or CAU. 
+
+### 2) Set up password-less log in
+
+In the terminal, generate an SSH key: 
+```bash
+ssh-keygen -t rsa -b 4096 -f $HOME/.ssh/id_rsa_nopwd
+```
+
+and just press enter when prompted for password. 
+This will create an SSH key on your computer in the hidden folder `.ssh/`
+
+Verify that both the key and the public key exist: 
+```bash
+% ls ~/.ssh/
+id_rsa_nopwd	id_rsa_nopwd.pub
+```
+
+Open `id_rsa_nopwd.pub`, and copy its contents. 
+
+Next, log in to NESH (see step 1 above), and paste the key from before into `~/.ssh/authorized_keys` (create this file if it does not already exist). 
+
+Now your key exists on both your local computer and NESH, so NESH will let you in without a password. 
+However, we need to tell your local computer to use the key to log in. 
+
+On your local computer: Create (if it does not exist) or modify your `.ssh/config` file. 
+It should contain:
+
+```bash
+Host nesh1
+   Hostname nesh-fe1.rz.uni-kiel.de
+   User <your username>
+   IdentityFile ~/.ssh/id_rsa
+   ForwardX11 yes
+```
+
+Now, log in to NESH again with 
+```bash
+ssh nesh1
+```
+
+It should work without ever asking for a password. 
+
+### 3) Set up Jupyter notebooks
+
+You'll need to be able to run Jupyter notebooks on NESH. 
+
+Download the `jupyter_on_HPC_setup_guide`:
+```bash
+git clone https://git.geomar.de/python/jupyter_on_HPC_setup_guide.git 
+```
+
+enter the scripts folder
+```bash
+cd jupyter_on_HPC_setup_guide/scripts/
+```
+
+and install a miniconda environment on your NESH account
+```bash
+./remote_jupyter_manager.sh nesh1 install
+```
+
+(this will take a while). 
+
+Now you can start Jupyter on NESH
+
+```bash
+./remote_jupyter_manager.sh nesh1 start
+```
 
 ## 1) Set up your environment
 
@@ -80,7 +167,8 @@ The notebook contains some examples for plotting a few key variables, but you sh
 
 ## 5) Run more experiments
  
-Now it is up to you to formulate an idea for a project, make the necessary changes to the runscript, run the experiment(s), and analyse the results. 
+Now it is up to you to formulate an idea for a project, make the necessary changes to the runscript, run the experiment(s), and analyse the results.  
+See "More information" below for some things that can be done and how to do it. 
 
 ## More information
  
@@ -102,11 +190,8 @@ Now it is up to you to formulate an idea for a project, make the necessary chang
  
 ### Default configurations
 
-A number of default configurations have been set up for this short project. You may use these as starting points and modify them as you wish. 
-
-* Standard AMIP simulations at Tco95 and Tco199 resolutions. 
-* Forecast of Desmond storm December 2015 at Tco199 resolution.
-* Aquaplanet at TL255 resolution. 
+OpenIFS can be run at Tco95 L91 (100 km, 91 levels) and Tco199 L91 (50 km, 91 levels) or Tco199 L137 (50 km, 137 levels). 
+All initial conditions are for 2008-01-01. 
 
 ### More ensemble members
 
@@ -130,22 +215,22 @@ Note: if you want another ensemble member you must set
 ensemble_id: 3
 ```
 
-and so on. A script exists to automatically launch a multi-ensemble run.
+and so on. A script exists to automatically launch a multi-ensemble run.  
 
 ### Modify a namelist parameter
 
-If you wish to change the rate of entrainment in organised convection, add the following to the runscript
+If you wish to e.g. change the rate of entrainment in convection to 1.5e-4, add the following to the runscript
 
 ```bash
 add_namelist_changes:
             fort.4:
                 NAMCUMF:
-                    ENTRORG: 1.75E-3
+                    ENTRORG: 1.5E-3
 ```
 
 This will change the parameter when the run is being set up. 
 
-Note that ENTRORG is defined in the NAMCUMF chapter. There are many other parameters in other chapter to tweak. For example, NAMCLDP includes a lot of cloud parameters. To change the fall speed of ice in clouds:
+Note that ENTRORG is defined in the NAMCUMF chapter. There are many other parameters in other chapters to tweak. For example, NAMCLDP includes a lot of cloud parameters. To change the fall speed of ice in clouds. 
 
 ```bash
  add_namelist_changes:
@@ -153,4 +238,10 @@ Note that ENTRORG is defined in the NAMCUMF chapter. There are many other parame
                 NAMCLDP:
                     RVICE: 0.13
 ```
+
+### Modify input data
+
+All model input can in principle be modified, e.g. orography, SST, land-sea mask, surface properties (vegetation, albedo, roughness etc). 
+You can change SSTs and sea-ice concentrations as well. 
+The data is contained in GRIB files, but can be converted to netCDF, modified, and converted back to GRIB. 
 
