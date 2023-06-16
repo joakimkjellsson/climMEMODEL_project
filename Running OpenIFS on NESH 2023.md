@@ -179,16 +179,16 @@ See "More information" below for some things that can be done and how to do it.
 
 | Command                      | Result                                                     |
 | ---------------------------- | ---------------------------------------------------------- |
-| ls                           | List contents of directory                                 |
-| vi <file>                    | Open and edit a text file                                  | 
-| cd <dir>                     | Change to directory <dir>                                  |
-| ls -lt                       | List contents with most recently changed files on top      |
-| ls -lt | head --lines=30     | As above, but only show first 30                           |
-| squeue -u $USER              | List all your currently running jobs                       |
-| watch squeue -u $USER        | As above, but update every 2 seconds                       |
-| sbatch <script.run>          | Submit a .run script to the queue                          |
-| scancel <job ID>             | Stop a running job (get Job ID from squeue)                |
-| ncview <file.nc>             | Open and plot contents of netCDF file                      |
+| `ls`                           | List contents of directory                                 |
+| `vi <file>`                    | Open and edit a text file                                  | 
+| `cd <dir>`                     | Change to directory <dir>                                  |
+| `ls -lt`                       | List contents with most recently changed files on top      |
+| `ls -lt | head --lines=30`     | As above, but only show first 30                           |
+| `squeue -u $USER`              | List all your currently running jobs                       |
+| `watch squeue -u $USER`        | As above, but update every 2 seconds                       |
+| `sbatch <script.run>`          | Submit a .run script to the queue                          |
+| `scancel <job ID>`             | Stop a running job (get Job ID from squeue)                |
+| `ncview <file.nc>`             | Open and plot contents of netCDF file                      |
  
 ### Default configurations
 
