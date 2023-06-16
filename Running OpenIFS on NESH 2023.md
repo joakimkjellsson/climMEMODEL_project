@@ -67,6 +67,32 @@ ssh nesh1
 
 It should work without ever asking for a password. 
 
+### 3) Configure start up 
+
+You should make sure that `git` is loaded automatically when you log in. 
+It's also a good idea to load `ncview` and `cdo` automatically (but not required). 
+
+To accomplish this, we configure our `~/.bash_profile` file to include the following: 
+
+```bash
+# This is required for OpenIFS to work
+module load git git-lfs
+
+# This is nice to have, but not required
+# (also slows down your log in by a few seconds)
+module load cdo 
+module load ncview
+```
+
+That should do it. 
+
+You can edit files in the terminal with `vi ~/.bash_profile` or `emacs -nw ~/.bash_profile` (omit `-nw` to get a GUI window).
+ 
+In `vi`, you need to press `i` to enter "edit" mode. When done editing, press `Esc` to exit edit mode, then `:wq` to write and quit. 
+
+In `emacs` you edit as usual, then press Ctrl+X then Ctrl+S to save and Ctrl+X and Ctrl+C to quit. 
+
+
 ## 1) Set up your environment
 
 You have two main directories: $HOME and $WORK. 
