@@ -145,7 +145,10 @@ The option `-e` specified the experiment name. It is good practice to give each 
 
 If you see a line similar to 
 ```bash
+Submitting jobscript to batch system...
 
+Output written by slurm:
+Submitted batch job 8154253
 ```
 then the job has been submitted to the queue and you may check the queue to see that it is running. 
 
@@ -155,11 +158,12 @@ When your experiment has finished, you may plot the results using Jupyter notebo
 
 On your local machine, install the remote Jupyter package
 ```bash
+git clone https://git.geomar.de/python/jupyter_on_HPC_setup_guide.git 
 ```
 
 The notebook may be found at 
 ```bash
-
+https://github.com/joakimkjellsson/climMEMODEL_project/blob/master/Plot_OpenIFS_climMEMODEL.ipynb
 ```
 
 The notebook contains some examples for plotting a few key variables, but you should definitely modify it to plot variables you are interested in and also compare simulations. 
