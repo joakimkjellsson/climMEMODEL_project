@@ -67,33 +67,6 @@ ssh nesh1
 
 It should work without ever asking for a password. 
 
-### 3) Set up Jupyter notebooks
-
-You'll need to be able to run Jupyter notebooks on NESH. 
-
-Download the `jupyter_on_HPC_setup_guide`:
-```bash
-git clone https://git.geomar.de/python/jupyter_on_HPC_setup_guide.git 
-```
-
-enter the scripts folder
-```bash
-cd jupyter_on_HPC_setup_guide/scripts/
-```
-
-and install a miniconda environment on your NESH account
-```bash
-./remote_jupyter_manager.sh nesh1 install
-```
-
-(this will take a while). 
-
-Now you can start Jupyter on NESH
-
-```bash
-./remote_jupyter_manager.sh nesh1 start
-```
-
 ## 1) Set up your environment
 
 You have two main directories: $HOME and $WORK. 
