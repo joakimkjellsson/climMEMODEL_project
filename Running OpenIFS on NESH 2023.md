@@ -152,6 +152,22 @@ Submitted batch job 8154253
 ```
 then the job has been submitted to the queue and you may check the queue to see that it is running. 
 
+If you type `squeue -u $USER`, you will see a list of all your current jobs. 
+If you type `watch squeue -u $USER` you'll see the same but it will also update every 2 seconds. 
+Typical output may be
+```bash
+             JOBID PARTITION     NAME     USER ST	TIME  NODES NODELIST(REASON)
+           8179002   cluster OIFS-KJK smomw352 PD       0:00	  1 (Resources)
+           8179003   cluster OIFS-KJK smomw352  R       0:40	  5 neshcl[128,279,304-306]
+```
+
+Here we see that there are two jobs. One is running (marked `R`), the other is in the queue (marked `PD`). 
+The job that is running is using 5 compute nodes and also lists their names. 
+When the job is finished it will disappear from the list. 
+
+After a simulation is done, you should see two new jobs appearing. One is the automatic "restart" from the previous job (assuming your model should run longer) and the other is a post processing job from the run you just completed. 
+The postprocessing will take a few minutes to finish and will compress your data and also produce grid files etc.  
+
 ## 4) Analyse the experiment
 
 When your experiment has finished, you may plot the results using Jupyter notebooks on NESH. 
